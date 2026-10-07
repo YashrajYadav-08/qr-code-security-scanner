@@ -1,0 +1,51 @@
+# QR Guard roadmap
+
+## Phase 1: MVP foundation
+
+- [ ] Create repository structure and initial backend scaffold
+- [ ] Implement URL normalization and risk classification engine
+- [ ] Add HTTP API to classify URLs before opening them
+- [ ] Build smart contract skeleton for reputation records
+- [ ] Document architecture and threat model
+
+## Phase 2: Threat intelligence integration
+
+- [ ] Add adapters for Google Safe Browsing, OpenPhish, PhishTank, and URLhaus
+- [ ] Cache threat intelligence results using Redis
+- [ ] Add domain reputation scoring from historical data and reports
+- [ ] Add false-positive and false-negative reporting support
+
+## Phase 3: QR code experience
+
+- [ ] Build QR camera scan flow
+- [ ] Extract URLs and detect malicious destination before open
+- [ ] Show clear risk warnings: safe / suspicious / malicious
+- [ ] Add allowlist support for trusted domains
+- [ ] Support file-based QR code ingestion for testing
+
+## Phase 4: Blockchain layer
+
+- [ ] Add governance model for report validation
+- [ ] Introduce staking for reporters and validators
+- [ ] Add transparent deploy flow for network selection
+- [ ] Store hashed URL data and report attestations on-chain
+- [ ] Automatically reconcile on-chain scores with backend reputation data
+
+## Phase 5: Production hardening
+
+- [ ] Add rate limiting, abuse protection, and anti-Sybil safeguards
+- [ ] Add privacy controls and data minimization checks
+- [ ] Run security audits on smart contracts and app logic
+- [ ] Add telemetry and risk dashboards
+- [ ] Support multiple mobile platforms and secure update channels
+
+## Success metrics
+
+- 95%+ detection rate for known phishing payloads
+- low false-positive rate on trusted domains
+- user warning latency under 2 seconds for common checks
+- on-chain reputation updates validated across multiple reporter submissions
+
+## Recommended next milestone
+
+The next implementation milestone is building the backend classification API and integrating a live threat feed adapter, then adding the QR scanning UI and blockchain reporting workflow.

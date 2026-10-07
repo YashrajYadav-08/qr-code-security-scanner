@@ -1,0 +1,72 @@
+# QR Guard backend
+
+This backend provides the URL classification and risk analysis engine for the QR Guard ecosystem.
+
+## Service structure
+
+```text
+backend/
+├── requirements.txt
+├── app/
+│   ├── __init__.py
+│   ├── config.py
+│   ├── main.py
+│   └── services/
+│       ├── __init__.py
+│       └── url_risk.py
+```
+
+## Responsibilities
+
+- `/api/v1/classify`: classify URL as safe / suspicious / malicious
+- URL normalization and validation
+- Domain analysis: suspicious TLDs, typo squatting, brand impersonation
+- Threat feed adapter layer for Google Safe Browsing, PhishTank, URLhaus, VirusTotal, etc.
+- Reporting API for false positives and missed phishing threats
+
+## Main API
+
+### POST `/api/v1/classify`
+
+Request body:
+
+```json
+{
+  "url": "https://example.com/login"
+}
+```
+
+Response:
+
+```json
+{
+  "url": "https://example.com/login",
+  "normalized_url": "https://example.com/login",
+  "risk_level": "low",
+  "risk_score": 12,
+  "reasons": ["domain not in known threat feeds"],
+  "suspicious": false
+}
+```
+
+## Threat feed integration
+
+The service is designed to support a feed adapter pattern:
+
+```python
+class ThreatFeedAdapter:
+    def lookup(self, url: str) -> dict:
+        raise NotImplementedError
+```
+
+Production integrations should include:
+- Google Safe Browsing
+- OpenPhish
+- PhishTank
+- URLhaus
+- VirusTotal
+- custom internal reputation database
+
+## Security note
+
+This module should never expose raw user data or secret tokens in logs. Hashing and redaction should be used before persistence.
